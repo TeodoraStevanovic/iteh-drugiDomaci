@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function dogs()
+    {
+        //jedan korisnik moze da ima vise pasa
+        return $this->hasMany(Dog::class);
+    }
 }
