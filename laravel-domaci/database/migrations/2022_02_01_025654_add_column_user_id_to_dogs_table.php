@@ -14,7 +14,7 @@ class AddColumnUserIdToDogsTable extends Migration
     public function up()
     {
         Schema::table('dogs', function (Blueprint $table) {
-            //
+            $table->foreignId('user_id');
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnUserIdToDogsTable extends Migration
     public function down()
     {
         Schema::table('dogs', function (Blueprint $table) {
-            //
+            $table->dropForeign('user_id');
         });
     }
 }
