@@ -19,6 +19,7 @@ class CreateDogsTable extends Migration
             $table->date('date_of_birth')->default('2022-01-01');
             $table->integer('age');
             $table->timestamps();
+            $table->timestamp('released_at')->nullable();
            $table->foreignId('breed_id');
         });
     }
