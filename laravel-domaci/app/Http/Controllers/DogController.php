@@ -6,6 +6,8 @@ use App\Http\Resources\DogCollection;
 use App\Http\Resources\DogResource;
 use App\Models\Dog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class DogController extends Controller
 {
@@ -38,8 +40,28 @@ class DogController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'date_of_birth' => 'required',
+            'age' => 'required',
+            'breed_id' => 'required'
+        ]);
+
+        if ($validator->fails())
+            return response()->json($validator->errors());
+
+        $dog = Dog::create([
+            'name' => $request->name,
+            'date_of_birth' => $request->date_of_birth,
+            'age' => $request->age,
+            'breed_id' => $request->breed_id,
+            'user_id' => Auth::user()->id,
+        ]);
+
+        return response()->json(['Dog is created successfully!', new DogResource($dog)]);
+    
     }
 
     /**
@@ -50,7 +72,7 @@ class DogController extends Controller
      */
     public function show(Dog $dog)
     {
-       // $dog = Dog::find($id);
+      
         return new DogResource($dog);
     }
 
@@ -74,7 +96,25 @@ class DogController extends Controller
      */
     public function update(Request $request, Dog $dog)
     {
-        //
+       $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:100',
+            'date_of_birth' => 'required',
+            'age' => 'required',
+            'breed_id' => 'required'
+
+    ]);
+
+    if ($validator->fails())
+        return response()->json($validator->errors());
+
+    
+        $dog-> name = $request->name;
+        $dog-> date_of_birth = $request->date_of_birth;
+        $dog-> age = $request->age;
+        $dog-> breed_id = $request->breed_id;
+        $dog-> save();
+
+    return response()->json(['dog is updated successfully!', new DogResource($dog)]);
     }
 
     /**
@@ -85,6 +125,8 @@ class DogController extends Controller
      */
     public function destroy(Dog $dog)
     {
-        //
+        $dog->delete();
+
+        return response()->json('Dog is deleted successfully!');
     }
 }

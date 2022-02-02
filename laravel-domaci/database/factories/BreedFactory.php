@@ -14,8 +14,8 @@ class BreedFactory extends Factory
     public function definition()
     {
         return [
-           // 'name' => $this->faker->word()
-           'name' => $this->faker->randomElement($array = array ('Beagle','Maltese','Pug','Akita','Pomeranian','Poodle','Golden Retriever'))
+           'name' => $this->faker->word()
+           //'name' => $this->faker->randomElement($array=array('Beagle','Maltese','Pug','Akita','Golden Retriver','Pomeranian'))
         ];
     }
 }

@@ -21,7 +21,7 @@ class Dog extends Model
         return $this->belongsTo(Breed::class);
     }
 
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     } 
